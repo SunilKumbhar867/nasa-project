@@ -1,20 +1,25 @@
 name: NASA PROJECT CI
 
 on:
-    push:
-        branches : [ main ]
-    pull_request:
-        branches : [ main ]
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 jobs:
   build:
+    env:
+      CI: true
+    strategy:
+      matrix:
+        node-version: [19.x,20.x]
     runs-on: windows-latest
     steps:
-        - name: Git Checkout
-          uses: actions/checkout@v3
+      - name: Git Checkout
+        uses: actions/checkout@v3
 
-        - name: Use Node.js Version 20
-          uses: actions/setup-node@v3
-          with:
-            node-version: '20'
-        - run: npm install
-        - run: npm run build --prefix client
+      - name: Use Node.js Version ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm run build --prefix client
