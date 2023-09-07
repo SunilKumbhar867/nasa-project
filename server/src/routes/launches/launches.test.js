@@ -3,9 +3,14 @@ const request = require('supertest');
 const app = require('../../app');
 const { connectDB , mongoDisconnect } = require('../../services/mongo');
 
+const { loadPlanetData } = require('../../models/planets.model');
+// const { loadLaunchData } = require('../../models/launches.model');
+
 describe('Launch ApI', ()=>{
     beforeAll(async()=>{
        await connectDB();
+       await loadPlanetData();
+    //    await loadLaunchData();
     })
 
     afterAll(async()=>{
