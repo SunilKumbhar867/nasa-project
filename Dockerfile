@@ -1,11 +1,10 @@
-# Use a Windows-based Node.js image
-FROM mcr.microsoft.com/windows/servercore:ltsc2019
+FROM node:lts-alpine
 
 # Set the working directory inside the container
-WORKDIR C:\app
+WORKDIR /app
 
 # Copy package.json and package-lock.json for the server
-COPY package*.json ./
+COPY package.json ./
 
 # Install server dependencies
 RUN npm install --only=production
@@ -24,10 +23,14 @@ RUN npm run build --prefix client
 COPY server/ server/
 
 # Set the user to run the application (optional)
-USER ContainerUser
+USER node
 
 # Define the command to start the server
 CMD [ "npm", "start", "--prefix", "server" ]
 
 # Expose the port your application listens on (if needed)
 EXPOSE 8000
+
+ 
+
+
